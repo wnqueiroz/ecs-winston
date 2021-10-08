@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "lib": ["es6"],
+    "allowJs": true,
+    "rootDir": "src",
+    "outDir": "./dist/lib",
+    "declarationDir": "./dist/@types",
+    "declaration": true,
+    "removeComments": true,
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*", "**/*spec.ts"]
+}
