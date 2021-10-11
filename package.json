@@ -1,6 +1,6 @@
 {
   "name": "@wnqueiroz/ecs-winston",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A formatter for the winston logger compatible with Elastic Common Schema (ECS) 🚀",
   "author": "William Queiroz <wnqueiroz@outlook.com>",
   "license": "MIT",
