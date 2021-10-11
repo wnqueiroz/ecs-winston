@@ -10,8 +10,10 @@ A formatter for the <a href="https://github.com/winstonjs/winston">winston</a> l
 [![CI/CD](https://github.com/wnqueiroz/ecs-winston/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/wnqueiroz/ecs-winston/actions/workflows/ci-cd.yml)
 [![codecov](https://codecov.io/gh/wnqueiroz/ecs-winston/branch/main/graph/badge.svg?token=25EY2SRG1P)](https://codecov.io/gh/wnqueiroz/ecs-winston)
 
-![Twitter Follow](https://img.shields.io/twitter/follow/wnqueiroz?color=3E9BEF&style=for-the-badge)
-
+<a href="https://twitter.com/wnqueiroz" alt="Twitter Follow">
+  <img src="https://img.shields.io/twitter/follow/wnqueiroz?style=social">
+</a>
+  
 </div>
 
 ## Table Of Contents
