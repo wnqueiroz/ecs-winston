@@ -5,7 +5,7 @@ import { ECS } from './interfaces/ecs.interface'
  * See the ECS Field Reference:
  * @see https://www.elastic.co/guide/en/ecs/1.12/ecs-field-reference.html.
  */
-export type ECSLog = ECS.Log.Fields
+export type ECSLog = ECS.Fields
 /**
  * Metadata of the logs that will be displayed.
  */
