@@ -1,13 +1,17 @@
 import { Request, Response } from 'express'
+import fastJsonStringify from 'fast-json-stringify'
 import merge from 'lodash.merge'
 import unset from 'lodash.unset'
+import qs from 'qs'
 import * as winston from 'winston'
 
-import { stringify } from './ecs-schema-stringify'
+import { ecsSchema } from './ecs-schema'
 import { ECSWinston } from './interfaces/ecs-winston.interface'
 import { ECS } from './interfaces/ecs.interface'
 
 const { combine, timestamp, printf } = winston.format
+
+export const stringify = fastJsonStringify(ecsSchema)
 
 type GetHttpRequestDataParams = {
   req: Request | undefined
@@ -34,17 +38,17 @@ export function getHttpRequestData({
   res,
   requestId,
 }: GetHttpRequestDataParams): {
-  http: ECS.Log.HttpFields
-  user_agent: ECS.Log.UserAgentFields
+  http: ECS.Http
+  user_agent: ECS.Useragent
+  url: ECS.Url
 } {
   if (!req || !res) return null
 
-  const { httpVersion, method, headers, body } = req
+  const { httpVersion, method, body } = req
 
-  const request = {
+  const request: ECS.Request = {
     id: requestId,
     method,
-    headers,
     body: {
       bytes: Number(req.get('content-length')),
       content: body,
@@ -52,7 +56,7 @@ export function getHttpRequestData({
     mime_type: req.get('content-type'),
   }
 
-  const response = {
+  const response: ECS.Response = {
     status_code: res.statusCode,
     mime_type: res.get('content-type'),
     body: {
@@ -61,7 +65,7 @@ export function getHttpRequestData({
     },
   }
 
-  const user_agent = {
+  const user_agent: ECS.Useragent = {
     original: req.get('user-agent'),
   }
 
@@ -71,9 +75,31 @@ export function getHttpRequestData({
     response,
   }
 
+  const { hostname, url, query, protocol } = req
+
+  const ecsUrl: ECS.Url = {}
+
+  if (hostname) {
+    const [host, port] = hostname.split(':')
+
+    ecsUrl.domain = host
+    ecsUrl.port = Number(port)
+  }
+
+  const hasQuery = url.indexOf('?')
+
+  if (hasQuery) ecsUrl.query = qs.stringify(query)
+
   return {
     http,
     user_agent,
+    url: {
+      domain: ecsUrl.domain || undefined,
+      path: req.route.path,
+      port: ecsUrl.port || undefined,
+      query: ecsUrl.query || undefined,
+      scheme: ['http', 'https'].includes(protocol) ? protocol : undefined,
+    },
   }
 }
 
@@ -128,7 +154,7 @@ export function getECSLogParsed({
     requestId: traceId,
   })
 
-  let ecsLogData: ECS.Log.RootFields = {
+  let ecsLogData: ECS.Root = {
     '@timestamp': timestamp,
     log: { level: String(level) },
     message: messageIsString ? message : null,

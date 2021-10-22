@@ -17,7 +17,7 @@ describe('ecs-winston', () => {
         message: 'lorem',
         stack_trace: error.stack,
         type: 'Error',
-      } as ECS.Log.ErrorFields)
+      } as ECS.Error)
     })
   })
 })

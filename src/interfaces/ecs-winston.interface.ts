@@ -19,7 +19,7 @@ export namespace ECSWinston {
       /**
        * Defines the log in ECS format. If the defined log matches a property used in conversions it will be displayed instead.
        */
-      ecs?: ECS.Log.Fields | undefined
+      ecs?: ECS.Fields | undefined
       /**
        * Defines the list of fields that should only be excluded from that log. E.g: ["http.request.headers.authorization", "http.request.body.content"].
        */

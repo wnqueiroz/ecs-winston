@@ -62,7 +62,8 @@
   "dependencies": {
     "fast-json-stringify": "^2.7.10",
     "lodash.merge": "^4.6.2",
-    "lodash.unset": "^4.5.2"
+    "lodash.unset": "^4.5.2",
+    "qs": "^6.10.1"
   },
   "peerDependencies": {
     "winston": "^3.x"
