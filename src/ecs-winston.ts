@@ -14,19 +14,25 @@ const { combine, timestamp, printf } = winston.format
 export const stringify = fastJsonStringify(ecsSchema)
 
 type GetHttpRequestDataParams = {
-  req: Request | undefined
-  res: Response | undefined
-  requestId: string | null
+  req?: Request | undefined
+  res?: Response | undefined
+  requestId?: string | null
 }
 
+export type GetHttpRequestDataReturn = {
+  http: ECS.Http
+  user_agent: ECS.Useragent
+  url: ECS.Url
+} | null
+
 type GetMetadataParams = {
-  config: ECSWinston.Config | undefined
-  message: ECSWinston.Log.Metadata
-  rest: ECSWinston.Log.Metadata
+  config?: ECSWinston.Config
+  message?: ECSWinston.Log.Metadata
+  rest?: ECSWinston.Log.Metadata
 }
 
 type GetECSLogParsedParams = {
-  config: ECSWinston.Config
+  config?: ECSWinston.Config
   level: string
   message: string | ECSWinston.Log.Metadata
   timestamp: string
@@ -37,17 +43,13 @@ export function getHttpRequestData({
   req,
   res,
   requestId,
-}: GetHttpRequestDataParams): {
-  http: ECS.Http
-  user_agent: ECS.Useragent
-  url: ECS.Url
-} {
+}: GetHttpRequestDataParams): GetHttpRequestDataReturn {
   if (!req || !res) return null
 
-  const { httpVersion, method, body } = req
+  const { httpVersion, method, body, hostname, url, query, protocol } = req
 
   const request: ECS.Request = {
-    id: requestId,
+    id: requestId || undefined,
     method,
     body: {
       bytes: Number(req.get('content-length')),
@@ -75,8 +77,6 @@ export function getHttpRequestData({
     response,
   }
 
-  const { hostname, url, query, protocol } = req
-
   const ecsUrl: ECS.Url = {}
 
   if (hostname) {
@@ -103,7 +103,11 @@ export function getHttpRequestData({
   }
 }
 
-export function getMetadata({ rest, config, message }: GetMetadataParams) {
+export function getMetadata({
+  config,
+  rest = {},
+  message = {},
+}: GetMetadataParams) {
   const exclude = {
     config: config?.exclude || [],
     message: message.exclude || rest.exclude || [],
@@ -157,7 +161,7 @@ export function getECSLogParsed({
   let ecsLogData: ECS.Root = {
     '@timestamp': timestamp,
     log: { level: String(level) },
-    message: messageIsString ? message : null,
+    message: messageIsString ? message : '',
     ecs: {
       version: '1.12.0',
     },

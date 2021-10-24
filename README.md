@@ -9,6 +9,9 @@ A formatter for the <a href="https://github.com/winstonjs/winston">winston</a> l
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![CI/CD](https://github.com/wnqueiroz/ecs-winston/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/wnqueiroz/ecs-winston/actions/workflows/ci-cd.yml)
 [![codecov](https://codecov.io/gh/wnqueiroz/ecs-winston/branch/main/graph/badge.svg?token=25EY2SRG1P)](https://codecov.io/gh/wnqueiroz/ecs-winston)
+<a href="https://www.npmjs.com/package/@wnqueiroz/ecs-winston">
+<img alt="npm"  src="https://img.shields.io/npm/v/@wnqueiroz/ecs-winston">
+</a>
 
 <a href="https://twitter.com/wnqueiroz" alt="Twitter Follow">
   <img src="https://img.shields.io/twitter/follow/wnqueiroz?style=social">

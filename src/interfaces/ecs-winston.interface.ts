@@ -9,7 +9,7 @@ export namespace ECSWinston {
      */
     setTraceId?: () => string | null
     /**
-     * Defines the list of fields that should be excluded from all logs. E.g: ["http.request.headers.authorization", "http.request.body.content"].
+     * Defines the list of fields that should be excluded from all logs. E.g: ["http.request.id", "http.request.body.content"].
      */
     exclude?: string[]
   }
@@ -21,16 +21,14 @@ export namespace ECSWinston {
        */
       ecs?: ECS.Fields | undefined
       /**
-       * Defines the list of fields that should only be excluded from that log. E.g: ["http.request.headers.authorization", "http.request.body.content"].
+       * Defines the list of fields that should only be excluded from that log. E.g: ["http.request.id", "http.request.body.content"].
        */
       exclude?: string[]
       /**
        * Defines an error to be transpiled in the log. E.g.: error: new Error("foo").
        */
       error?: any
-    }
 
-    export interface Metadata {
       req?: Request
       res?: Response
     }
