@@ -95,7 +95,7 @@ export function getHttpRequestData({
     user_agent,
     url: {
       domain: ecsUrl.domain || undefined,
-      path: req.route.path,
+      path: req?.route?.path || undefined,
       port: ecsUrl.port || undefined,
       query: ecsUrl.query || undefined,
       scheme: ['http', 'https'].includes(protocol) ? protocol : undefined,
